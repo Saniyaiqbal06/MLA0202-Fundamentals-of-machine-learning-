@@ -1,0 +1,118 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyO/kf6AfcsQcqQcrD7+g8Z8",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Saniyaiqbal06/MLA0202-Fundamentals-of-machine-learning-/blob/main/LAB%20EXPERIMENTS/EXP12\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "euvP2g7BhHlE",
+        "outputId": "ad627d76-04b5-4398-a139-65a3bb4521b5"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "CREDIT SCORE CLASSIFICATION USING KNN\n",
+            "-------------------------------------\n",
+            "Model Accuracy: 100.0 %\n",
+            "\n",
+            "Enter Customer Details\n",
+            "Enter Credit Score: 600\n",
+            "Enter Monthly Income: 120000\n",
+            "\n",
+            "Credit Score Classification: GOOD\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Credit Score Classification Using KNN\n",
+        "\n",
+        "# Import libraries\n",
+        "from sklearn.neighbors import KNeighborsClassifier\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.metrics import accuracy_score\n",
+        "\n",
+        "# Sample dataset\n",
+        "# Features: Credit Score, Monthly Income\n",
+        "X = [\n",
+        "    [750, 50000],\n",
+        "    [680, 40000],\n",
+        "    [600, 25000],\n",
+        "    [800, 60000],\n",
+        "    [550, 20000],\n",
+        "    [720, 45000],\n",
+        "    [500, 15000],\n",
+        "    [780, 55000],\n",
+        "    [650, 35000],\n",
+        "    [480, 12000]\n",
+        "]\n",
+        "\n",
+        "# 1 = Good, 0 = Bad\n",
+        "y = [1, 1, 0, 1, 0, 1, 0, 1, 1, 0]\n",
+        "\n",
+        "# Split dataset\n",
+        "X_train, X_test, y_train, y_test = train_test_split(\n",
+        "    X, y, test_size=0.2, random_state=42\n",
+        ")\n",
+        "\n",
+        "# Create KNN model\n",
+        "knn = KNeighborsClassifier(n_neighbors=3)\n",
+        "\n",
+        "# Train model\n",
+        "knn.fit(X_train, y_train)\n",
+        "\n",
+        "# Predict test data\n",
+        "y_pred = knn.predict(X_test)\n",
+        "\n",
+        "# Calculate accuracy\n",
+        "accuracy = accuracy_score(y_test, y_pred)\n",
+        "\n",
+        "print(\"CREDIT SCORE CLASSIFICATION USING KNN\")\n",
+        "print(\"-------------------------------------\")\n",
+        "print(\"Model Accuracy:\", accuracy * 100, \"%\")\n",
+        "\n",
+        "# Get user input\n",
+        "print(\"\\nEnter Customer Details\")\n",
+        "credit_score = int(input(\"Enter Credit Score: \"))\n",
+        "income = int(input(\"Enter Monthly Income: \"))\n",
+        "\n",
+        "# Predict credit score category\n",
+        "result = knn.predict([[credit_score, income]])\n",
+        "\n",
+        "if result[0] == 1:\n",
+        "    print(\"\\nCredit Score Classification: GOOD\")\n",
+        "else:\n",
+        "    print(\"\\nCredit Score Classification: BAD\")"
+      ]
+    }
+  ]
+}
