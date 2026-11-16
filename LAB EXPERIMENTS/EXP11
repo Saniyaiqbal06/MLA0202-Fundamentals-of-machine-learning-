@@ -1,0 +1,136 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyODVl3URzSOAk8a1OncxP9H",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Saniyaiqbal06/MLA0202-Fundamentals-of-machine-learning-/blob/main/LAB%20EXPERIMENTS/EXP11\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9lrLMwHggCge",
+        "outputId": "e9de2494-0bfd-4ad0-da7f-ab57a52d5dfa"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "IRIS FLOWER CLASSIFICATION USING KNN\n",
+            "-----------------------------------\n",
+            "Model Accuracy: 100.0 %\n",
+            "\n",
+            "Enter Flower Measurements\n",
+            "Sepal Length: 12\n",
+            "Sepal Width: 14\n",
+            "Petal Length: 6\n",
+            "Petal Width: 4\n",
+            "\n",
+            "Predicted Flower: virginica\n",
+            "\n",
+            "Classification Report:\n",
+            "              precision    recall  f1-score   support\n",
+            "\n",
+            "      setosa       1.00      1.00      1.00        10\n",
+            "  versicolor       1.00      1.00      1.00         9\n",
+            "   virginica       1.00      1.00      1.00        11\n",
+            "\n",
+            "    accuracy                           1.00        30\n",
+            "   macro avg       1.00      1.00      1.00        30\n",
+            "weighted avg       1.00      1.00      1.00        30\n",
+            "\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "78"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 1
+        }
+      ],
+      "source": [
+        "# Iris Flower Classification Using KNN\n",
+        "\n",
+        "# Import libraries\n",
+        "from sklearn.datasets import load_iris\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.neighbors import KNeighborsClassifier\n",
+        "from sklearn.metrics import accuracy_score, classification_report\n",
+        "\n",
+        "# Load dataset\n",
+        "iris = load_iris()\n",
+        "X = iris.data\n",
+        "y = iris.target\n",
+        "\n",
+        "# Split dataset into training and testing\n",
+        "X_train, X_test, y_train, y_test = train_test_split(\n",
+        "    X, y, test_size=0.2, random_state=42\n",
+        ")\n",
+        "\n",
+        "# Create KNN classifier\n",
+        "knn = KNeighborsClassifier(n_neighbors=3)\n",
+        "\n",
+        "# Train the model\n",
+        "knn.fit(X_train, y_train)\n",
+        "\n",
+        "# Predict test data\n",
+        "y_pred = knn.predict(X_test)\n",
+        "\n",
+        "# Calculate accuracy\n",
+        "accuracy = accuracy_score(y_test, y_pred)\n",
+        "\n",
+        "print(\"IRIS FLOWER CLASSIFICATION USING KNN\")\n",
+        "print(\"-----------------------------------\")\n",
+        "print(\"Model Accuracy:\", accuracy * 100, \"%\")\n",
+        "\n",
+        "# User input\n",
+        "print(\"\\nEnter Flower Measurements\")\n",
+        "\n",
+        "sl = float(input(\"Sepal Length: \"))\n",
+        "sw = float(input(\"Sepal Width: \"))\n",
+        "pl = float(input(\"Petal Length: \"))\n",
+        "pw = float(input(\"Petal Width: \"))\n",
+        "\n",
+        "# Predict flower species\n",
+        "prediction = knn.predict([[sl, sw, pl, pw]])\n",
+        "\n",
+        "print(\"\\nPredicted Flower:\", iris.target_names[prediction[0]])\n",
+        "\n",
+        "# Classification report\n",
+        "print(\"\\nClassification Report:\")\n",
+        "print(classification_report(y_test, y_pred,\n",
+        "                            target_names=iris.target_names))\n",
+        "78"
+      ]
+    }
+  ]
+}
