@@ -1,0 +1,158 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMgq3o/BfZY5uLcG7E/Ka4o",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Saniyaiqbal06/MLA0202-Fundamentals-of-machine-learning-/blob/main/LAB%20EXPERIMENTS/EXP20\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "rPobk8qs_Q6n",
+        "outputId": "41c58dc7-cbaa-410e-999a-366b0bffa8b2"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Sales Dataset:\n",
+            "    Month  Sales\n",
+            "0       1    100\n",
+            "1       2    120\n",
+            "2       3    130\n",
+            "3       4    150\n",
+            "4       5    170\n",
+            "5       6    180\n",
+            "6       7    200\n",
+            "7       8    210\n",
+            "8       9    230\n",
+            "9      10    250\n",
+            "10     11    270\n",
+            "11     12    300\n",
+            "\n",
+            "Model Trained Successfully!\n",
+            "\n",
+            "Actual Sales:\n",
+            "[270 250 100]\n",
+            "\n",
+            "Predicted Sales:\n",
+            "[271.52 253.99  96.24]\n",
+            "\n",
+            "Model Performance:\n",
+            "Mean Absolute Error: 3.09\n",
+            "R2 Score: 1.0\n",
+            "\n",
+            "FUTURE SALES PREDICTION\n",
+            "Month 13 Predicted Sales: 306.58\n",
+            "Month 14 Predicted Sales: 324.11\n",
+            "Month 15 Predicted Sales: 341.63\n",
+            "Month 16 Predicted Sales: 359.16\n",
+            "Month 17 Predicted Sales: 376.69\n",
+            "Month 18 Predicted Sales: 394.22\n",
+            "\n",
+            "Future Sales Prediction Completed!\n"
+          ]
+        }
+      ],
+      "source": [
+        "\n",
+        "# FUTURE SALES PREDICTION USING MACHINE LEARNING\n",
+        "\n",
+        "# Step 1: Import Libraries\n",
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "from sklearn.linear_model import LinearRegression\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.metrics import mean_absolute_error, r2_score\n",
+        "\n",
+        "# Step 2: Create Sales Dataset\n",
+        "data = {\n",
+        "    'Month': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,\n",
+        "              11, 12],\n",
+        "    'Sales': [100, 120, 130, 150, 170, 180,\n",
+        "              200, 210, 230, 250, 270, 300]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "print(\"Sales Dataset:\")\n",
+        "print(df)\n",
+        "\n",
+        "# Step 3: Separate Input and Output\n",
+        "X = df[['Month']]\n",
+        "y = df['Sales']\n",
+        "\n",
+        "# Step 4: Split Dataset\n",
+        "X_train, X_test, y_train, y_test = train_test_split(\n",
+        "    X, y, test_size=0.2, random_state=42\n",
+        ")\n",
+        "\n",
+        "# Step 5: Create Model\n",
+        "model = LinearRegression()\n",
+        "\n",
+        "# Step 6: Train Model\n",
+        "model.fit(X_train, y_train)\n",
+        "\n",
+        "print(\"\\nModel Trained Successfully!\")\n",
+        "\n",
+        "# Step 7: Predict Test Sales\n",
+        "y_pred = model.predict(X_test)\n",
+        "\n",
+        "print(\"\\nActual Sales:\")\n",
+        "print(y_test.values)\n",
+        "\n",
+        "print(\"\\nPredicted Sales:\")\n",
+        "print(np.round(y_pred, 2))\n",
+        "\n",
+        "# Step 8: Evaluate Model\n",
+        "mae = mean_absolute_error(y_test, y_pred)\n",
+        "r2 = r2_score(y_test, y_pred)\n",
+        "\n",
+        "print(\"\\nModel Performance:\")\n",
+        "print(\"Mean Absolute Error:\", round(mae, 2))\n",
+        "print(\"R2 Score:\", round(r2, 2))\n",
+        "\n",
+        "# Step 9: Predict Future Sales\n",
+        "future_months = pd.DataFrame({\n",
+        "    'Month': [13, 14, 15, 16, 17, 18]\n",
+        "})\n",
+        "\n",
+        "future_sales = model.predict(future_months)\n",
+        "\n",
+        "print(\"\\nFUTURE SALES PREDICTION\")\n",
+        "\n",
+        "for month, sales in zip(future_months['Month'], future_sales):\n",
+        "    print(\"Month\", month, \"Predicted Sales:\", round(sales, 2))\n",
+        "\n",
+        "# Final Result\n",
+        "print(\"\\nFuture Sales Prediction Completed!\")\n"
+      ]
+    }
+  ]
+}
